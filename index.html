@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://codinggeekks.github.io/Lot-Size-Calculator/ -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lot Size Calculator</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div
+      class="calculator"
+      style="
+        background: linear-gradient(to right, rgb(28, 63, 95), rgb(10, 22, 33));
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 30px;
+        width: 400px;
+        text-align: center;
+      "
+    >
+      <h1>Lot Size Calculator</h1>
+
+      <div class="input-group">
+        <label for="accountBalance">Account Balance ($):</label>
+        <input
+          type="text"
+          id="accountBalance"
+          placeholder="e.g., 10,000"
+          style="
+            width: 100%;
+            background: linear-gradient(
+              to right,
+              rgb(28, 63, 95),
+              rgb(10, 22, 33)
+            );
+            border: 1px solid rgb(28, 63, 95);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+          "
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="riskPercentage">Risk Percentage (%):</label>
+        <input
+          type="number"
+          id="riskPercentage"
+          placeholder="e.g., 2"
+          style="
+            width: 100%;
+            background: linear-gradient(
+              to right,
+              rgb(28, 63, 95),
+              rgb(10, 22, 33)
+            );
+            border: 1px solid rgb(28, 63, 95);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+          "
+        />
+      </div>
+
+      <div
+        class="input-group risk-display"
+        style="
+          background: linear-gradient(
+            to right,
+            rgb(28, 63, 95),
+            rgb(10, 22, 33)
+          );
+          padding: 10px;
+          border-radius: 5px;
+          color: rgb(0, 212, 255);
+          font-weight: bold;
+          text-align: center;
+          width: 100%;
+          box-sizing: border-box;
+        "
+      >
+        <label>Risk Amount:</label>
+        <span id="riskAmount">$0.00</span>
+      </div>
+
+      <div class="input-group">
+        <label for="stopLoss">Stop Loss (Pips):</label>
+        <input
+          type="number"
+          id="stopLoss"
+          placeholder="e.g., 50"
+          style="
+            width: 100%;
+            background: linear-gradient(
+              to right,
+              rgb(28, 63, 95),
+              rgb(10, 22, 33)
+            );
+            border: 1px solid rgb(28, 63, 95);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+          "
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="assetType">Asset Type:</label>
+        <select
+          id="assetType"
+          style="
+            width: 100%;
+            background: linear-gradient(
+              to right,
+              rgb(28, 63, 95),
+              rgb(10, 22, 33)
+            );
+            border: 1px solid rgb(28, 63, 95);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+          "
+        >
+          <option value="commodities">Commodities</option>
+          <option value="forex">Forex Pairs</option>
+          <option value="indices">Indices</option>
+          <option value="crypto">Crypto</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="tradingPair">Select Pair:</label>
+        <select
+          id="tradingPair"
+          style="
+            width: 100%;
+            background: linear-gradient(
+              to right,
+              rgb(28, 63, 95),
+              rgb(10, 22, 33)
+            );
+            border: 1px solid rgb(28, 63, 95);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box;
+          "
+        >
+          <option value="XAUUSD">XAUUSD</option>
+          <option value="XAGUSD">XAGUSD</option>
+          <option value="XTIUSD">XTIUSD</option>
+          <option value="XBRUSD">XBRUSD</option>
+          <option value="XNGUSD">XNGUSD</option>
+        </select>
+      </div>
+
+      <button onclick="calculateLotSize()">Calculate Lot Size</button>
+      <div
+        class="result"
+        style="
+          background: linear-gradient(
+            to right,
+            rgb(28, 63, 95),
+            rgb(10, 22, 33)
+          );
+          padding: 15px;
+          border-radius: 5px;
+          color: rgb(0, 255, 136);
+          font-weight: bold;
+        "
+      >
+        <h2>Result:</h2>
+        <p id="resultText"></p>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
