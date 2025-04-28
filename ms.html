@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Risk Calculator</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        background-color: #f4f4f9;
+      }
+      .full {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        max-width: 90%;
+        text-align: left;
+      }
+      h1 {
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+      }
+      .input-group {
+        display: flex;
+        /* align-items: center; */
+        margin-bottom: 6px;
+      }
+      input {
+        flex: 3;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 2px 2px 0px 0px;
+        font-size: 1rem;
+      }
+      label {
+        font-weight: bold;
+      }
+
+      .clear-btn {
+        /* margin-left: 10px; */
+        padding: 10px 15px;
+        border: none;
+        background-color: #dc3545;
+        color: white;
+        border-radius: 0px 2px 2px 0px;
+        cursor: pointer;
+      }
+      .clear-btn:hover {
+        background-color: #c82333;
+      }
+      .button-group {
+        display: flex;
+        align-items: left;
+        justify-content: space-between;
+      }
+
+      .button-group button {
+        font-size: 1rem;
+        border: 0px solid black;
+        background-color: green;
+        color: white;
+        border-radius: 0.2rem;
+        padding: 3px 6px;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          width: 100%;
+          padding: 5px;
+          box-shadow: none;
+          border-radius: 6px;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .input-group {
+          margin-bottom: 10px;
+        }
+
+        input {
+          padding: 5px;
+          font-size: 1rem;
+          width: 60%;
+        }
+
+        label {
+          font-size: 0.8rem;
+        }
+
+        .clear-btn {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="full">
+      <div class="container">
+        <h1 style="text-align: center">Risk Calculator</h1>
+        <div class="form-group">
+          <label for="accountSize">Account Size</label>
+          <div class="input-group">
+            <input
+              type="number"
+              id="accountSize"
+              placeholder="Enter account size"
+            />
+            <button class="clear-btn" onclick="clearInput('accountSize')">
+              X
+            </button>
+          </div>
+          <div class="button-group">
+            <button onclick="addSize('amount', '5000')">5k</button>
+            <button onclick="addSize('amount', '10000')">10k</button>
+            <button onclick="addSize('amount', '25000')">25k</button>
+            <button onclick="addSize('amount', '50000')">50k</button>
+            <button onclick="addSize('amount', '100000')">100k</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="riskPercentage">Risk Percentage</label>
+          <div class="input-group">
+            <input
+              type="number"
+              id="riskPercentage"
+              placeholder="Enter risk percentage"
+            />
+            <button class="clear-btn" onclick="clearInput('riskPercentage')">
+              X
+            </button>
+          </div>
+          <div class="button-group">
+            <button onclick="addSize('risk', '0.25')">0.25</button>
+            <button onclick="addSize('risk', '0.5')">0.5</button>
+            <button onclick="addSize('risk', '1')">1</button>
+            <button onclick="addSize('risk', '2')">2</button>
+            <button onclick="addSize('risk', '5')">5</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="riskPoints">Risk Points</label>
+          <div class="input-group">
+            <input
+              type="number"
+              id="riskPoints"
+              placeholder="Enter risk points"
+            />
+            <button class="clear-btn" onclick="clearInput('riskPoints')">
+              X
+            </button>
+          </div>
+          <div
+            id="inPips"
+            style="
+              font-weight: bold;
+              color: darkgreen;
+              margin-left: 3px;
+              font-size: 0.9rem;
+            "
+          ></div>
+        </div>
+
+        <div class="output" style="text-align: center">
+          <p>Risk Amount: <span id="riskAmount">0</span></p>
+          <p>Lots: <span id="lots">0</span></p>
+        </div>
+
+        <div style="text-align: center; font-size: 0.8rem">
+          Developed by: <b style="color: #002161">Muaz Shaban</b>
+        </div>
+      </div>
+    </div>
+    <script>
+      function addSize(type, value) {
+        if (type == "amount") {
+          document.getElementById("accountSize").value = value;
+        } else if (type == "risk") {
+          document.getElementById("riskPercentage").value = value;
+        }
+        calculateRisk();
+      }
+
+      function calculateRisk() {
+        const accountSize =
+          parseFloat(document.getElementById("accountSize").value) || null;
+        const riskPercentage =
+          parseFloat(document.getElementById("riskPercentage").value) || null;
+        const riskPoints =
+          parseFloat(document.getElementById("riskPoints").value) || null;
+
+        const riskAmount = Math.round(accountSize * (riskPercentage / 100));
+        const lots =
+          riskPoints !== 0 ? (riskAmount / riskPoints).toFixed(2) : 0;
+
+        document.getElementById("riskAmount").textContent = riskAmount;
+        document.getElementById("lots").textContent = lots;
+        document.getElementById("inPips").textContent =
+          "≈ " + riskPoints / 10 + " pips";
+
+        localStorage.setItem("accountSize", accountSize);
+        localStorage.setItem("riskPercentage", riskPercentage);
+        localStorage.setItem("riskPoints", riskPoints);
+      }
+
+      function clearInput(id) {
+        document.getElementById(id).value = "";
+        calculateRisk();
+      }
+
+      document.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("input", calculateRisk);
+        const savedValue = localStorage.getItem(input.id);
+        if (savedValue) {
+          input.value = savedValue;
+        }
+      });
+
+      calculateRisk();
+    </script>
+  </body>
+</html>
